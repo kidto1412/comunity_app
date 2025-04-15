@@ -1,8 +1,10 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:comunity_apps/theme/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,9 +16,14 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final List<bool> isSelected = <bool>[true, false];
   TextEditingController _dateController = TextEditingController();
+  TextEditingController _username = TextEditingController();
+  TextEditingController _name = TextEditingController();
+  TextEditingController _password = TextEditingController();
   final List<String> genders = ['Laki-laki', 'Perempuan'];
   final TextEditingController _selectGender = TextEditingController();
   String? selectedGender;
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +41,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
+            Center(
+              child: GestureDetector(
+                onTap: _showImageSourceDialog,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.grey[300],
+                  backgroundImage:
+                      _imageFile != null ? FileImage(_imageFile!) : null,
+                  child: _imageFile == null
+                      ? Icon(Icons.camera_alt, size: 40, color: Colors.white70)
+                      : null,
+                ),
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 10.0, bottom: 15.0),
               child: TextField(
+                controller: _name,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.email_outlined),
+                  prefixIcon: Icon(Icons.person),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0)),
                   hintText: 'Nama',
@@ -92,6 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Container(
               margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15.0),
               child: TextField(
+                controller: _username,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   border: OutlineInputBorder(
@@ -103,6 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Container(
               margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15.0),
               child: TextField(
+                controller: _password,
                 obscureText: true,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock_outline),
@@ -112,6 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
+            SizedBox(height: 20),
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 10.0),
                 width: double.infinity,
@@ -169,5 +194,44 @@ class _RegisterPageState extends State<RegisterPage> {
         _dateController.text = _picked.toString().split(" ")[0];
       });
     }
+  }
+
+  Future<XFile?> _pickImage(ImageSource imageSource) async {
+    final XFile? pickedFile = await _picker.pickImage(source: imageSource);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _showImageSourceDialog() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.camera_alt),
+                title: Text('Ambil dari Kamera'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImage(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Pilih dari Galeri'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImage(ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
