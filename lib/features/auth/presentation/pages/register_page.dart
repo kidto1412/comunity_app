@@ -1,9 +1,11 @@
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:comunity_apps/core/routes/router.dart';
 import 'package:comunity_apps/theme/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -171,7 +173,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   Container(
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(AppRouter.login);
+                          },
                           child: Text('Masuk', style: textBlue)))
                 ],
               ),

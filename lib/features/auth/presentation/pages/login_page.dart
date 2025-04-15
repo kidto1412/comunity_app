@@ -1,6 +1,8 @@
+import 'package:comunity_apps/core/routes/router.dart';
 import 'package:comunity_apps/theme/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -57,7 +59,9 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRouter.home);
+                  },
                   child: Text(
                     'Login',
                     style: TextStyle(color: Colors.white, fontSize: 16),
@@ -97,7 +101,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Container(
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(AppRouter.register);
+                          },
                           child: Text('Daftar', style: textBlue)))
                 ],
               ),
