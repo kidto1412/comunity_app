@@ -1,6 +1,7 @@
+import 'package:comunity_apps/features/auth/presentation/controllers/auth/auth_binding.dart';
 import 'package:comunity_apps/features/auth/presentation/pages/login_page.dart';
 import 'package:comunity_apps/features/auth/presentation/pages/register_page.dart';
-import 'package:comunity_apps/pages/home_page.dart';
+import 'package:comunity_apps/features/home/presentation/pages/home_page.dart';
 import 'package:get/get.dart';
 
 class AppRouter {
@@ -12,11 +13,11 @@ class AppRouter {
 class AppPages {
   static final routes = [
     GetPage(
-      name: AppRouter.login,
-      page: () => const LoginPage(),
-      transition: Transition.fadeIn, // ⬅️ Smooth transition
-      transitionDuration: Duration(milliseconds: 500), // Optional
-    ),
+        name: AppRouter.login,
+        page: () => const LoginPage(),
+        transition: Transition.leftToRight, // ⬅️ Smooth transition
+        transitionDuration: Duration(milliseconds: 500), // Optional
+        binding: AuthBinding()),
     GetPage(
       name: AppRouter.register,
       page: () => const RegisterPage(),

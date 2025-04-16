@@ -7,9 +7,9 @@ abstract class AuthLocalDataSource {
   Future<String> register();
 }
 
-class AuthRemoteImplRemoteDataSource extends AuthLocalDataSource {
+class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   final StorageService storageService;
-  AuthRemoteImplRemoteDataSource(this.storageService);
+  AuthLocalDataSourceImpl(this.storageService);
 
   @override
   Future<LoginResponse> login() {

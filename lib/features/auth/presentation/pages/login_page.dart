@@ -1,5 +1,11 @@
+import 'package:comunity_apps/core/local/storage_service.dart';
+import 'package:comunity_apps/core/network/network_client.dart';
 import 'package:comunity_apps/core/routes/router.dart';
+import 'package:comunity_apps/features/auth/data/datasources/local_datasource.dart';
+import 'package:comunity_apps/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:comunity_apps/features/auth/presentation/controllers/auth/auth_controller.dart';
 import 'package:comunity_apps/theme/shared.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -13,6 +19,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final List<bool> isSelected = <bool>[true, false];
+  // TextEditingController usernameController = TextEditingController();
+  // TextEditingController passwordController = TextEditingController();
+  final controller = Get.find<LoginController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

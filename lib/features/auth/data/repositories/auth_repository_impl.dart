@@ -3,6 +3,7 @@ import 'package:comunity_apps/core/error/failure.dart';
 import 'package:comunity_apps/core/local/storage_service.dart';
 import 'package:comunity_apps/features/auth/data/datasources/local_datasource.dart';
 import 'package:comunity_apps/features/auth/data/datasources/remote_datasource.dart';
+import 'package:comunity_apps/features/auth/data/models/auth_model.dart';
 import 'package:comunity_apps/features/auth/domain/entities/auth.dart';
 import 'package:comunity_apps/features/auth/domain/repositories/auth_repository.dart';
 import 'package:comunity_apps/utils/conectivity_service.dart';
@@ -21,7 +22,7 @@ class AuthRepositoryImpl extends AuthRepository {
       required this.storageService});
 
   @override
-  Future<Either<LoginResponse, Failure>> login(Auth data) async {
+  Future<Either<LoginResponse, Failure>> login(AuthModel data) async {
     bool connected = await connectivity.isConnected();
 
     // TODO: implement login
