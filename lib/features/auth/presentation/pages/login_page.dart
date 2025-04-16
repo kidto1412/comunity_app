@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final List<bool> isSelected = <bool>[true, false];
   // TextEditingController usernameController = TextEditingController();
   // TextEditingController passwordController = TextEditingController();
-  final controller = Get.find<LoginController>();
+  final loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
               margin: EdgeInsets.only(
                   left: 20.0, right: 20.0, top: 10.0, bottom: 15.0),
               child: TextField(
+                onChanged: (val) => loginController.username.value = val,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   border: OutlineInputBorder(
@@ -56,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15.0),
               child: TextField(
                 obscureText: true,
+                onChanged: (val) => loginController.password.value = val,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock_outline),
                   border: OutlineInputBorder(
@@ -64,20 +66,25 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.0),
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(AppRouter.home);
-                  },
-                  child: Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                )),
+            Obx(
+              () => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10.0),
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: loginController.isLoading.value
+                        ? null
+                        : loginController.login,
+                    child: loginController.isLoading.value
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            'Login',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                  )),
+            ),
             Container(
               margin: EdgeInsets.only(right: 10.0),
               alignment: Alignment.centerRight,
