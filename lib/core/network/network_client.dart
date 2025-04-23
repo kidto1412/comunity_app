@@ -9,10 +9,9 @@ class NetworkClient {
 
   NetworkClient({required this.dio, this.storageService}) {
     dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        String? token = storageService?.read("token");
-        // print("token interceptopr" + token);
-        print('this is token' + token.toString() ?? '');
+      onRequest: (options, handler) async {
+        final token = await storageService?.read("token");
+        log('🔥 Token from storage: $token');
         if (token != null) {
           options.headers['Authorization'] = 'Bearer $token';
         }

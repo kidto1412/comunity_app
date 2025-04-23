@@ -40,7 +40,8 @@ class AuthRepositoryImpl extends AuthRepository {
         // print('result' + result.toString());
         print('token is' + result.token);
         storageService.write("token", result.token);
-
+        var myToken = storageService.read("token");
+        print("may token" + myToken);
         return Right(result);
       }
     } catch (e) {

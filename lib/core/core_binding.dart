@@ -10,8 +10,15 @@ class CoreBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => Dio());
-    Get.lazyPut(() => NetworkClient(dio: Get.find()));
+
     Get.lazyPut(() => GetStorage());
-    Get.lazyPut(() => StorageService(box: Get.find()));
+
+    Get.lazyPut<StorageService>(
+        () => StorageService(box: Get.find<GetStorage>()));
+
+    Get.lazyPut(() => NetworkClient(
+          dio: Get.find<Dio>(),
+          storageService: Get.find<StorageService>(),
+        ));
   }
 }

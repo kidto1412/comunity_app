@@ -11,18 +11,20 @@ class UserModel extends User {
 
   factory UserModel.formJson(Map<String, dynamic> json) {
     return UserModel(
+        id: json['id'] ?? 0,
         username: json['username'],
         name: json['name'],
         dateOfBirth: json['date_of_birth'],
-        photoProfile: json['photoProfile'] ?? '');
+        photoProfile: json['photo_profile'] ?? '');
   }
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "username": username,
       "dateOfBirth": dateOfBirth,
       "name": name,
-      "photoProfile": photoProfile
+      "photo_profile": photoProfile
     };
   }
 }

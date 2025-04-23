@@ -15,5 +15,6 @@ class User extends Equatable {
       this.photoProfile});
 
   @override
-  List<Object> get props => [username, name, dateOfBirth, photoProfile ?? ''];
+  List<Object> get props =>
+      [id ?? 0, username, name, dateOfBirth, photoProfile ?? ''];
 }

@@ -35,9 +35,15 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
 
   @override
   Future<UserModel> getProfile() async {
-    var response = await client.get(Constant.baseUrl + '/user/profile');
-    final body = response.data['data'];
-    print("user : " + body);
-    return UserModel.formJson(body);
+    try {
+      var response = await client.get(Constant.baseUrl + '/user/profile');
+      final data = response.data['data'];
+      print("user : " + data.toString());
+      return UserModel.formJson(data);
+    } catch (e) {
+      print('Parsing error: $e');
+      rethrow;
+    }
+    // return UserModel.formJson(body);
   }
 }
