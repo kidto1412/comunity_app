@@ -1,9 +1,25 @@
+import 'dart:developer';
+
+import 'package:comunity_apps/core/local/storage_service.dart';
 import 'package:dio/dio.dart';
 
 class NetworkClient {
   final Dio dio;
+  final StorageService? storageService;
 
-  NetworkClient({required this.dio});
+  NetworkClient({required this.dio, this.storageService}) {
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        String? token = storageService?.read("token");
+        // print("token interceptopr" + token);
+        print('this is token' + token.toString() ?? '');
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
+        return handler.next(options);
+      },
+    ));
+  }
 
   Future<Response> get(
     String url, {

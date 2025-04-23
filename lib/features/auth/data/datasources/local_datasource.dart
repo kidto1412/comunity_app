@@ -1,10 +1,12 @@
 import 'package:comunity_apps/core/local/storage_service.dart';
+import 'package:comunity_apps/features/auth/data/models/token_model.dart';
+import 'package:comunity_apps/features/auth/data/models/user_model.dart';
 import 'package:comunity_apps/features/auth/domain/entities/auth.dart';
 
 abstract class AuthLocalDataSource {
-  Future<LoginResponse> login();
-  Future<ResponseProfile> getProfile();
-  Future<String> register();
+  Future<TokenModel> login();
+  Future<UserModel> getProfile();
+  // Future<String> register();
 }
 
 class AuthLocalDataSourceImpl extends AuthLocalDataSource {
@@ -12,18 +14,32 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   AuthLocalDataSourceImpl(this.storageService);
 
   @override
-  Future<LoginResponse> login() {
-    return storageService.read('token');
+  Future<TokenModel> login() async {
+    final tokenData = storageService.read('token');
+    if (tokenData != null) {
+      return TokenModel.formJson(tokenData);
+    } else {
+      throw Exception('Token tidak ditemukan');
+    }
   }
 
   @override
-  @override
-  Future<String> register() {
-    return storageService.read('register');
-  }
+  // Future<String> register() {
+  //   final dataRegister =  storageService.read('register');
+
+  //   if (dataRegister != null ) {
+  //     r
+  //   }
+  // }
 
   @override
-  Future<ResponseProfile> getProfile() {
-    return storageService.read('profile');
+  Future<UserModel> getProfile() async {
+    final profileData = await storageService.read('profile');
+    if (profileData != null) {
+      return UserModel.formJson(profileData);
+    } else {
+      throw Exception('No profile found in local storage');
+    }
+    // return storageService.read('profile');
   }
 }

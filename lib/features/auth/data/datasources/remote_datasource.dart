@@ -2,12 +2,13 @@ import 'package:comunity_apps/constant/constant.dart';
 import 'package:comunity_apps/core/network/network_client.dart';
 import 'package:comunity_apps/features/auth/data/models/auth_model.dart';
 import 'package:comunity_apps/features/auth/data/models/token_model.dart';
+import 'package:comunity_apps/features/auth/data/models/user_model.dart';
 import 'package:comunity_apps/features/auth/domain/entities/auth.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<LoginResponse> auth(AuthModel data);
+  Future<TokenModel> auth(AuthModel data);
   Future<String> register(RegisterUser data);
-  Future<ResponseProfile> getProfile();
+  Future<UserModel> getProfile();
 }
 
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
@@ -15,11 +16,12 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   AuthRemoteDataSourceImpl(this.client);
 
   @override
-  Future<LoginResponse> auth(AuthModel request) async {
+  Future<TokenModel> auth(AuthModel request) async {
     var response = await client.post(Constant.baseUrl + "/user/login",
         data: request.toJson());
-    final dataBody = response.data['data']; // ambil token dari 'data'
-    return TokenModel.formJson(dataBody);
+    final token = response.data['data']; // ambil token dari 'data'
+    print(token);
+    return TokenModel.formJson(token);
   }
 
   @override
@@ -32,9 +34,10 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   }
 
   @override
-  Future<ResponseProfile> getProfile() async {
-    var response = await client.get('/user/profile');
+  Future<UserModel> getProfile() async {
+    var response = await client.get(Constant.baseUrl + '/user/profile');
     final body = response.data['data'];
-    return body;
+    print("user : " + body);
+    return UserModel.formJson(body);
   }
 }

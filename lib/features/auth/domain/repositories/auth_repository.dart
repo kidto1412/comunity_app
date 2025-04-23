@@ -8,5 +8,5 @@ abstract class AuthRepository {
   Future<Either<String, Failure>> register(RegisterUser data);
 
   // login
-  Future<Either<LoginResponse, Failure>> login(AuthModel data);
+  Future<Either<Failure, LoginResponse>> login(AuthModel data);
 }

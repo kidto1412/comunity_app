@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:comunity_apps/core/error/failure.dart';
 
 import 'package:comunity_apps/core/local/storage_service.dart';
 import 'package:comunity_apps/features/auth/data/datasources/local_datasource.dart';
 import 'package:comunity_apps/features/auth/data/datasources/remote_datasource.dart';
 import 'package:comunity_apps/features/auth/data/models/auth_model.dart';
+import 'package:comunity_apps/features/auth/data/models/token_model.dart';
 import 'package:comunity_apps/features/auth/domain/entities/auth.dart';
 import 'package:comunity_apps/features/auth/domain/repositories/auth_repository.dart';
 import 'package:comunity_apps/utils/conectivity_service.dart';
@@ -22,22 +25,26 @@ class AuthRepositoryImpl extends AuthRepository {
       required this.storageService});
 
   @override
-  Future<Either<LoginResponse, Failure>> login(AuthModel data) async {
+  Future<Either<Failure, LoginResponse>> login(AuthModel data) async {
     bool connected = await connectivity.isConnected();
 
     // TODO: implement login
 
     try {
       if (!connected) {
-        LoginResponse result = await authLocalDataSource.login();
-        storageService.write("token", result);
-        return Left(result);
+        // TokenModel result = await authLocalDataSource.login();
+
+        return Left(Failure());
       } else {
-        LoginResponse result = await authRemoteDataSource.auth(data);
-        return Left(result);
+        TokenModel result = await authRemoteDataSource.auth(data);
+        // print('result' + result.toString());
+        print('token is' + result.token);
+        storageService.write("token", result.token);
+
+        return Right(result);
       }
     } catch (e) {
-      return Right(Failure());
+      return Left(Failure());
     }
 
     // throw UnimplementedError();
@@ -48,9 +55,10 @@ class AuthRepositoryImpl extends AuthRepository {
     bool connected = await connectivity.isConnected();
     try {
       if (!connected) {
-        String result = await authLocalDataSource.register();
-        storageService.write("register", result);
-        return Left(result);
+        // String result = await authLocalDataSource.register();
+        // storageService.write("register", result);
+        // return Left(result);
+        return Right(Failure());
       } else {
         String result = await authRemoteDataSource.register(data);
         return Left(result);

@@ -8,8 +8,8 @@ class StorageService {
     box.write(key, value);
   }
 
-  read(String key) {
-    box.read(key);
+  dynamic read(String key) {
+    return box.read(key);
   }
 
   remove(String key) {

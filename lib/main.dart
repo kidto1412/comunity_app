@@ -1,3 +1,4 @@
+import 'package:comunity_apps/core/core_binding.dart';
 import 'package:comunity_apps/core/routes/router.dart';
 import 'package:comunity_apps/features/home/presentation/pages/home_page.dart';
 import 'package:comunity_apps/features/auth/presentation/pages/login_page.dart';
@@ -8,7 +9,7 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init("MyStorage");
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: CoreBinding(),
       initialRoute: AppRouter.login,
       getPages: AppPages.routes,
       title: 'Flutter Demo',

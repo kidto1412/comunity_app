@@ -17,7 +17,7 @@ class LoginResponse extends Equatable {
   const LoginResponse({required this.token});
 
   @override
-  List<Object?> get props => [token];
+  List<Object> get props => [token];
 }
 
 class RegisterUser extends Auth {
@@ -46,6 +46,8 @@ class ResponseProfile extends RegisterUser {
       required super.username,
       required super.photoProfile})
       : super(password: null);
+  @override
+  List<Object> get props => [username, name, dateOfBirth, photoProfile ?? ''];
 }
 
 class Login extends Auth {

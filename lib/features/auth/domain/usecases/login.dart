@@ -8,7 +8,7 @@ class LoginUseCase {
   final AuthRepository authRepository;
   const LoginUseCase(this.authRepository);
 
-  Future<Either<LoginResponse, Failure>> execute(AuthModel data) async {
+  Future<Either<Failure, LoginResponse>> execute(AuthModel data) async {
     return await authRepository.login(data);
   }
 }

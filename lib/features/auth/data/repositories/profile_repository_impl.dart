@@ -2,7 +2,9 @@ import 'package:comunity_apps/core/error/failure.dart';
 import 'package:comunity_apps/core/local/storage_service.dart';
 import 'package:comunity_apps/features/auth/data/datasources/local_datasource.dart';
 import 'package:comunity_apps/features/auth/data/datasources/remote_datasource.dart';
+import 'package:comunity_apps/features/auth/data/models/user_model.dart';
 import 'package:comunity_apps/features/auth/domain/entities/auth.dart';
+import 'package:comunity_apps/features/auth/domain/entities/user.dart';
 import 'package:comunity_apps/features/auth/domain/repositories/profile_repository.dart';
 import 'package:comunity_apps/utils/conectivity_service.dart';
 import 'package:dartz/dartz.dart';
@@ -19,19 +21,23 @@ class ProfileRepositoryImpl extends ProfileRepository {
       required this.storageService});
 
   @override
-  Future<Either<ResponseProfile, Failure>> getProfile() async {
+  Future<Either<Failure, User>> getProfile() async {
     try {
       bool connected = await connectivity.isConnected();
       if (!connected) {
-        ResponseProfile result = await authRemoteDataSource.getProfile();
-        storageService.write("profile", result);
-        return Left(result);
+        // UserModel result = await authRemoteDataSource.getProfile();
+        // storageService.write("profile", result);
+        return Left(Failure());
       } else {
-        ResponseProfile result = await authLocalDataSource.getProfile();
-        return Left(result);
+        UserModel result = await authRemoteDataSource.getProfile();
+        storageService.write("profile", result.toJson());
+
+        print(result);
+
+        return Right(result);
       }
     } catch (e) {
-      return Right(Failure());
+      return Left(Failure());
     }
   }
 }
