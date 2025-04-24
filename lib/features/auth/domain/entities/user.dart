@@ -18,3 +18,13 @@ class User extends Equatable {
   List<Object> get props =>
       [id ?? 0, username, name, dateOfBirth, photoProfile ?? ''];
 }
+
+class ResponseProfile extends User {
+  const ResponseProfile(
+      {required super.name,
+      required super.dateOfBirth,
+      required super.username,
+      required super.photoProfile});
+  @override
+  List<Object> get props => [username, name, dateOfBirth, photoProfile ?? ''];
+}

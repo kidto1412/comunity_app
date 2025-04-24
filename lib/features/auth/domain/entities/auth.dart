@@ -20,36 +20,6 @@ class LoginResponse extends Equatable {
   List<Object> get props => [token];
 }
 
-class RegisterUser extends Auth {
-  final int? id;
-  final String name;
-  final String dateOfBirth;
-  final String? photoProfile;
-
-  const RegisterUser(
-      {this.id,
-      required this.name,
-      required this.dateOfBirth,
-      required super.password,
-      required super.username,
-      this.photoProfile});
-
-  @override
-  List<Object> get props =>
-      [username, password ?? '', name, dateOfBirth, photoProfile ?? ''];
-}
-
-class ResponseProfile extends RegisterUser {
-  const ResponseProfile(
-      {required super.name,
-      required super.dateOfBirth,
-      required super.username,
-      required super.photoProfile})
-      : super(password: null);
-  @override
-  List<Object> get props => [username, name, dateOfBirth, photoProfile ?? ''];
-}
-
 class Login extends Auth {
   const Login({required super.username, required super.password});
 

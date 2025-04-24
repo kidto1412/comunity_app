@@ -1,4 +1,5 @@
 import 'package:comunity_apps/features/auth/presentation/controllers/auth/auth_binding.dart';
+import 'package:comunity_apps/features/auth/presentation/controllers/user/user_binding.dart';
 import 'package:comunity_apps/features/auth/presentation/pages/login_page.dart';
 import 'package:comunity_apps/features/auth/presentation/pages/register_page.dart';
 import 'package:comunity_apps/features/home/presentation/pages/home_page.dart';
@@ -25,10 +26,10 @@ class AppPages {
       transitionDuration: Duration(milliseconds: 500), // Optional
     ),
     GetPage(
-      name: AppRouter.home,
-      transition: Transition.fade,
-      transitionDuration: Duration(milliseconds: 500),
-      page: () => const HomePage(),
-    ),
+        name: AppRouter.home,
+        transition: Transition.fade,
+        transitionDuration: Duration(milliseconds: 500),
+        page: () => const HomePage(),
+        binding: UserBinding())
   ];
 }

@@ -1,7 +1,7 @@
 import 'package:comunity_apps/core/local/storage_service.dart';
 import 'package:comunity_apps/core/network/network_client.dart';
 import 'package:comunity_apps/core/routes/router.dart';
-import 'package:comunity_apps/features/auth/data/datasources/local_datasource.dart';
+import 'package:comunity_apps/features/auth/data/datasources/local/local_datasource.dart';
 import 'package:comunity_apps/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:comunity_apps/features/auth/presentation/controllers/auth/auth_controller.dart';
 import 'package:comunity_apps/theme/shared.dart';
